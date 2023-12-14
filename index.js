@@ -3,6 +3,13 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 import router from './config/routes.js'
 
+import 'dotenv/config' // only needs to be added if it doesn't already exist
+import path, { dirname } from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = dirname(__filename)
+
 //! Variables
 const app = express()
 const port = process.env.PORT
@@ -17,6 +24,14 @@ app.use((req, res, next) => {
 
 //! Endpoints
 app.use('/api', router)
+app.use(express.static(path.join(__dirname, 'client', 'dist')))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+})
+
+
+
 
 // Start servers
 async function startServer() {
@@ -32,3 +47,7 @@ async function startServer() {
   }
 }
 startServer()
+
+
+
+
