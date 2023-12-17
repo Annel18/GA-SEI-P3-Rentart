@@ -11,18 +11,35 @@ export default function RegisterUser(){
   const data = useOutletContext()
   const setUserData = data[1]
 
-  async function submitData(parsedData){
+  async function register(parsedData){
     try {
-      // Get logged in
+      // Get registered in
       const res = await axios.post('/api/register', parsedData)
       // Save data
       setUserData(res.data)
+      // Go to homepage
+      login(parsedData)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  async function login(parsedData){
+    try {
+      // Get logged in
+      const res = await axios.post('/api/login', parsedData)
+      // Save data
+      const stagedData = res.data
+      setUserData(stagedData)
       // Go to homepage
       navigate("/profile")
     } catch (error) {
       console.log(error)
     }
   }
+
 
   function authenticate(e){
     e.preventDefault()
@@ -49,7 +66,7 @@ export default function RegisterUser(){
       return setNoBueno('Password confirmation must match password')
     }
     parsedData.usertype = parsedData.usertype === 'artist' ? 1 : 2
-    submitData(parsedData)
+    register(parsedData)
   }
   
   return (

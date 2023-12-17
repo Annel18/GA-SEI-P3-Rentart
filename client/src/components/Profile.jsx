@@ -6,9 +6,8 @@ import AppreciatorProfile from "./AppreciatorProfile"
 import AdminProfile from "./AdminProfile"
 
 export default function Profile(){
-  // State
-  const data = useOutletContext()
-  const [ userData, setUserData ] = data
+  //! State
+  const [ userData, setUserData ] = useOutletContext()
 
   // User type variable to render appropriate component
   const type = userData.usertype
@@ -23,15 +22,15 @@ export default function Profile(){
       }
     }
     getOut()
-  }, [])
+  }, [userData, navigate])
 
   return (
     <>
       {type === (null || undefined)
       ? navigate('/')
-      : type === 1 ? <ArtistProfile userData={userData} />
+      : type === 1 ? <ArtistProfile userData={userData} setUserData={setUserData}/>
       : type === 2 ? <AppreciatorProfile userData={userData} setUserData={setUserData} />
-      : type === 0 && <AdminProfile userData={userData} />
+      : type === 0 && <AdminProfile userData={userData} setUserData={setUserData}/>
       }
     </>
   )
