@@ -16,7 +16,6 @@ export default function ArtIndex() {
   const [search, setSearch] = useState('')
   const [arts, setArts] = useState([])
   const [open, setOpen] = useState(false)
-  // const [userData, setUserData] = useState(JSON.parse(sessionStorage.getItem('data')))
   const [userData, setUserData] = useOutletContext()
   const handleOpen = () => setOpen(true)
   const handleClose = () => setOpen(false)
@@ -129,9 +128,23 @@ export default function ArtIndex() {
   //* FAVOURITES 
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
 
+  // const [ArtId, setArtId] = useState('')
+  const idAll = []
+  const idSet = [... new Set(arts.map(art => art._id))]
+  idSet.forEach(id => {
+    idAll.push(id)
+  })
+  
+  // userData.favourites.filter((value) => arts.includes(value))
+  
+  
+  
   async function updateUserFavourites(newFavourite) {
     try {
-      const res = await axios.put('/api/profile', { favourites: newFavourite }, {
+      console.log(userData.favourites)
+      const favouritesValidity = idAll.filter((value) => newFavourite.includes(value))
+      console.log(favouritesValidity)
+      const res = await axios.put('/api/profile', { favourites: favouritesValidity }, {
         headers: {
           Authorization: `Bearer ${userData.token}`,
         },

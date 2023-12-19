@@ -1,18 +1,57 @@
 import ArtListDiv from "./ArtListDiv"
 import ImageUploadSection from "./ImageUploadDiv"
+import { useEffect, useState } from 'react'
+import axios from "axios"
 // import ArtworkUploadSection from "./ArtistWorkUploadDiv"
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-export default function ArtistProfile({ userData }) {
+export default function ArtistProfile({ userData, setUserData }) {
+  const [arts, setArts] = useState([])
+  useEffect(() => {
+    async function getArtData() {
+      try {
+        const res = await axios.get('/api/art')
+        setArts(res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getArtData()
+  }, [])
+
+  const idAll = []
+  const idSet = [... new Set(arts.map(art => art._id))]
+  idSet.forEach(id => {
+    idAll.push(id)
+  })
+
+  async function updateRental() {
+    try {
+      console.log(userData.favourites)
+      const rentalValidity = idAll.filter((value) => userData.rented.includes(value))
+      const resUser = await axios.put('/api/profile', { rented: rentalValidity }, {
+        headers: {
+          Authorization: `Bearer ${userData.token}`,
+        },
+      })
+      const newData = { ...resUser.data, token: userData.token }
+      setUserData(newData)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  
+
   return (
     <section>
       <Container className='' fluid={true}>
         <Row className=''>
           <Col className='settings' sm={2}>
-            <h3 className='modal-header' style={{justifyContent:"flex-end"}}>Settings</h3>
+            <h3 className='modal-header' style={{ justifyContent: "flex-end" }}>Settings</h3>
             <ImageUploadSection />
             <Container className="setting-fields">
               <div><p>{userData.name}</p><button>Edit</button></div>
@@ -41,7 +80,7 @@ export default function ArtistProfile({ userData }) {
                   {userData.personal_collection
                     .map((artId) => {
                       return (
-                        <ArtListDiv id={artId} key={artId} />
+                        <ArtListDiv id={artId} key={artId} crossDisplay={true}/>
                       )
                     })}
                 </Row>
@@ -52,9 +91,13 @@ export default function ArtistProfile({ userData }) {
               <Container fluid className='art-grid'>
                 <Row className="artAll-list">
                   {userData.rented
+                    // .filter(artId => {
+                    //   artId === undefined
+                    // })
                     .map((artId) => {
+                      updateRental()
                       return (
-                        <ArtListDiv id={artId} key={artId} />
+                        <ArtListDiv id={artId} key={artId} crossDisplay={'none'}/>
                       )
                     })}
                 </Row>
@@ -65,9 +108,10 @@ export default function ArtistProfile({ userData }) {
               <Container fluid className='art-grid'>
                 <Row className="artAll-list">
                   {userData.favourites
+                    // .filter(artId => artId === undefined)
                     .map((artId) => {
                       return (
-                        <ArtListDiv id={artId} key={artId} />
+                        <ArtListDiv id={artId} key={artId} crossDisplay={'none'} />
                       )
                     })}
                 </Row>
