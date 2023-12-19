@@ -141,7 +141,7 @@ export default function ArtIndex() {
   
   async function updateUserFavourites(newFavourite) {
     try {
-      //// const favouritesValidity = idAll.filter((value) => newFavourite.includes(value))
+      // const favouritesValidity = idAll.filter((value) => newFavourite.includes(value))
       const res = await axios.put('/api/profile', { favourites: newFavourite }, {
         headers: {
           Authorization: `Bearer ${userData.token}`,
@@ -335,12 +335,12 @@ export default function ArtIndex() {
                               if (isFavourite) {
                                 e.target.innerText = '🤍'
                                 const newFavourite = favourites.filter(value => value !== indArtId)
-                                updateUserFavourites(newFavourite, setUserData)
+                                updateUserFavourites(newFavourite)
                               }
                               else {
                                 e.target.innerText = '♥️'
                                 const newFavourite = [...favourites, indArtId]
-                                updateUserFavourites(newFavourite, setUserData)
+                                updateUserFavourites(newFavourite)
                               }
                             }
                           }}

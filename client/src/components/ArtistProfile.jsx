@@ -1,51 +1,79 @@
 import ArtListDiv from "./ArtListDiv"
 import ImageUploadSection from "./ImageUploadDiv"
-import { useEffect, useState } from 'react'
-import axios from "axios"
+// import { useEffect, useState } from 'react'
+// import axios from "axios"
 // import ArtworkUploadSection from "./ArtistWorkUploadDiv"
 
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
-export default function ArtistProfile({ userData, setUserData }) {
-  const [arts, setArts] = useState([])
-  useEffect(() => {
-    async function getArtData() {
-      try {
-        const res = await axios.get('/api/art')
-        setArts(res.data)
-      } catch (error) {
-        console.log(error)
-      }
-    }
-    getArtData()
-  }, [])
+export default function ArtistProfile({ userData }) {
+  // const [arts, setArts] = useState([])
+  // const idAll = []
+  // const idSet = [... new Set(arts.map(art => art._id))]
+  // idSet.forEach(id => {
+  //   idAll.push(id)
+  // })
 
-  const idAll = []
-  const idSet = [... new Set(arts.map(art => art._id))]
-  idSet.forEach(id => {
-    idAll.push(id)
-  })
+  // const { favourites } = userData
+  // const favouritesValidity = idAll.filter((value) => favourites.includes(value))
+  // console.log(favouritesValidity)
 
-  async function checkValidity() {
-    try {
-      console.log(userData.favourites)
-      const rentalValidity = idAll.filter((value) => userData.rented.includes(value))
-      const favouritesValidity = idAll.filter((value) => userData.favourites.includes(value))
-      const resUser = await axios.put('/api/profile', { rented: rentalValidity }, { favourites: favouritesValidity }, {
-        headers: {
-          Authorization: `Bearer ${userData.token}`,
-        },
-      })
-      const newData = { ...resUser.data, token: userData.token }
-      setUserData(newData)
+  // useEffect(() => {
+  //   async function getArtData() {
+  //     try {
+  //       const res = await axios.get('/api/art')
+  //       setArts(res.data)
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+  //   getArtData()
+  // }, [])
 
-    } catch (error) {
-      console.log(error)
-    }
-  }
-  
+
+
+  // async function checkRentalValidity() {
+  //   try {
+  //     const rentalValidity = idAll.filter((value) => userData.rented.includes(value))
+  //     // const favouritesValidity = idAll.filter((value) => userData.favourites.includes(value))
+  //     const resUser = await axios.put('/api/profile', { rented: rentalValidity }, {
+  //       headers: {
+  //         Authorization: `Bearer ${userData.token}`,
+  //       },
+  //     })
+  //     const newData = { ...resUser.data, token: userData.token }
+  //     setUserData(newData)
+
+  //   } catch (error) {
+  //     console.log(error)
+  //   }
+  // }
+
+
+
+  // useEffect(() => {
+  //   console.log(favouritesValidity)
+  //   async function checkFavouriteValidity(favouritesValidity) {
+  //     try {
+  //       // const favouritesValidity = idAll.filter((value) => userData.favourites.includes(value))
+  //       const resUser = await axios.put('/api/profile', { favourites: favouritesValidity }, {
+  //         headers: {
+  //           Authorization: `Bearer ${userData.token}`,
+  //         },
+  //       })
+  //       const newData = { ...resUser.data, token: userData.token }
+  //       setUserData(newData)
+
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  //   }
+
+  //   checkFavouriteValidity(favouritesValidity)
+  // }, [])
+
 
   return (
     <section>
@@ -81,7 +109,7 @@ export default function ArtistProfile({ userData, setUserData }) {
                   {userData.personal_collection
                     .map((artId) => {
                       return (
-                        <ArtListDiv id={artId} key={artId} crossDisplay={true}/>
+                        <ArtListDiv id={artId} key={artId} crossDisplay={true} heartDisplay={'none'}/>
                       )
                     })}
                 </Row>
@@ -96,9 +124,9 @@ export default function ArtistProfile({ userData, setUserData }) {
                     //   artId === undefined
                     // })
                     .map((artId) => {
-                      checkValidity()
+                      // checkRentalValidity()
                       return (
-                        <ArtListDiv id={artId} key={artId} crossDisplay={'none'}/>
+                        <ArtListDiv id={artId} key={artId} crossDisplay={'none'} heartDisplay={'none'} />
                       )
                     })}
                 </Row>
@@ -111,8 +139,9 @@ export default function ArtistProfile({ userData, setUserData }) {
                   {userData.favourites
                     // .filter(artId => artId === undefined)
                     .map((artId) => {
+                      // checkFavouriteValidity(favouritesValidity)
                       return (
-                        <ArtListDiv id={artId} key={artId} crossDisplay={'none'} />
+                        <ArtListDiv id={artId} key={artId} crossDisplay={'none'} heartDisplay={true}/>
                       )
                     })}
                 </Row>
