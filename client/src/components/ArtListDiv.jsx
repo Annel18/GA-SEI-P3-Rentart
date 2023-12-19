@@ -13,6 +13,18 @@ export default function ArtListDiv({ id, crossDisplay, heartDisplay }) {
 
   const isUserLoggedIn = userData && userData.token
 
+  useEffect(() => {
+    async function getArtData() {
+      try {
+        const res = await axios.get('/api/art')
+        setArts(res.data)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    getArtData()
+  }, [])
+  
   async function updateArtistCollection(updatedCollection) {
     try {
       const userRes = await axios.put('/api/profile', { personal_collection: updatedCollection }, {
@@ -32,10 +44,17 @@ export default function ArtListDiv({ id, crossDisplay, heartDisplay }) {
       console.log(error)
     }
   }
+  const [arts, setArts] = useState([])
+  const idAll = []
+  const idSet = [... new Set(arts.map(art => art._id))]
+  idSet.forEach(id => {
+    idAll.push(id)
+  })
 
   async function updateUserFavourites(newFavourite) {
     try {
-      const res = await axios.put('/api/profile', { favourites: newFavourite }, {
+      const favouritesValidity = idAll.filter((value) => newFavourite.includes(value))
+      const res = await axios.put('/api/profile', { favourites: favouritesValidity }, {
         headers: {
           Authorization: `Bearer ${userData.token}`,
         },
