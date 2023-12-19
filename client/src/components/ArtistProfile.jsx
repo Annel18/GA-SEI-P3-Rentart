@@ -28,11 +28,12 @@ export default function ArtistProfile({ userData, setUserData }) {
     idAll.push(id)
   })
 
-  async function updateRental() {
+  async function checkValidity() {
     try {
       console.log(userData.favourites)
       const rentalValidity = idAll.filter((value) => userData.rented.includes(value))
-      const resUser = await axios.put('/api/profile', { rented: rentalValidity }, {
+      const favouritesValidity = idAll.filter((value) => userData.favourites.includes(value))
+      const resUser = await axios.put('/api/profile', { rented: rentalValidity }, { favourites: favouritesValidity }, {
         headers: {
           Authorization: `Bearer ${userData.token}`,
         },
@@ -95,7 +96,7 @@ export default function ArtistProfile({ userData, setUserData }) {
                     //   artId === undefined
                     // })
                     .map((artId) => {
-                      updateRental()
+                      checkValidity()
                       return (
                         <ArtListDiv id={artId} key={artId} crossDisplay={'none'}/>
                       )

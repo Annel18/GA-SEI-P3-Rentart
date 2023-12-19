@@ -129,11 +129,11 @@ export default function ArtIndex() {
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false)
 
   // const [ArtId, setArtId] = useState('')
-  const idAll = []
-  const idSet = [... new Set(arts.map(art => art._id))]
-  idSet.forEach(id => {
-    idAll.push(id)
-  })
+  // const idAll = []
+  // const idSet = [... new Set(arts.map(art => art._id))]
+  // idSet.forEach(id => {
+  //   idAll.push(id)
+  // })
   
   // userData.favourites.filter((value) => arts.includes(value))
   
@@ -141,10 +141,8 @@ export default function ArtIndex() {
   
   async function updateUserFavourites(newFavourite) {
     try {
-      console.log(userData.favourites)
-      const favouritesValidity = idAll.filter((value) => newFavourite.includes(value))
-      console.log(favouritesValidity)
-      const res = await axios.put('/api/profile', { favourites: favouritesValidity }, {
+      //// const favouritesValidity = idAll.filter((value) => newFavourite.includes(value))
+      const res = await axios.put('/api/profile', { favourites: newFavourite }, {
         headers: {
           Authorization: `Bearer ${userData.token}`,
         },
