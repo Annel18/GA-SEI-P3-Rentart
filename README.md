@@ -67,14 +67,12 @@ Before collaborating on Github, by creating a development branch and various com
 
 ![Alt text](./client/src/images/gitHub_branches.png)
 
-### Day 1
 We started by building the bones of the backend:
 - Adam and Antonio wrote the js files needed for the art and user models where the defined schemas follow the ERD diagram, they also wrote the controllers using these models and wrote the CRUD functions
 - I wrote the routes.js, the secureRoute.js and the index.js that would bring the functions within the controllers together and enable rerouting them to the appropriate browser pages to follow our wireframe.
 - I also wrote the seeds.js and added some minimal arts.js and users.js to start populating the database. On the latter, we all had to contribute to populate the database with various artwork.
 - I created a Google sheet with a list of artworks that we wanted to include on our website and shared it with the team for collaboration. It also helped ensure that we don't have duplicates before adding the data to the seeds in VScode.
 
-### Day 2
 From day 2, we were ready to start working on the client side and developing the frontend, but we had to add up to the basic backend functionalities in parallel to our frontend progress
 - My main focus is the index page that will host the public collection 
     - Make the grid display responsive
