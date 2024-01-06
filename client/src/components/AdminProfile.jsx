@@ -4,7 +4,7 @@ import axios from "axios"
 import Col from "react-bootstrap/esm/Col"
 import Container from "react-bootstrap/esm/Container"
 import Row from "react-bootstrap/esm/Row"
-
+import ArtListDiv from "./ArtListDiv"
 export default function AdminProfile({ userData }) {
 
   const [searchData, setSearchData] = useState('')
@@ -64,9 +64,11 @@ export default function AdminProfile({ userData }) {
                 </Col>
                 <Col className="art-results">
                   {searchData && searchData.artData.map(art => (
-                    <Col as={Link} to={`/art/${art._id}`} key={art._id}>
-                      <section className="single-art-result" >
-                        <div style={{ width: '160px' }}>
+                    <Container fluid={true} as={Link} className="art-grid" to={`/art/${art._id}`} key={art._id}>
+                      <Row className="artAll-list">
+                        <Col sm={4} className="single-art-container"/*"single-art-result"*/ >
+                          <ArtListDiv id={art._id} key={art._id} crossDisplay={''} heartDisplay={'none'} />
+                          {/* <div style={{ width: '160px' }}>
                           <div className="search-image" style={{ backgroundImage: `url(${art.artImage})` }}></div>
                         </div>
                         <div className="text-data">
@@ -74,9 +76,10 @@ export default function AdminProfile({ userData }) {
                           <p>Name: {art.artName}</p>
                           <p>Year: {art.year}</p>
                           <p>Movement: {art.movement}</p>
-                        </div>
-                      </section>
-                    </Col>
+                        </div> */}
+                        </Col>
+                      </Row>
+                    </Container>
                   ))}
                 </Col>
               </Row>

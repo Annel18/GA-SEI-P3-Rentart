@@ -57,7 +57,7 @@ export default function AppreciatorProfile({ userData, setUserData }) {
                   {userData.rented
                     .map((artId) => {
                       return (
-                        <ArtListDiv id={artId} key={artId} />
+                        <ArtListDiv id={artId} key={artId} crossDisplay={'none'} heartDisplay={'none'}/>
                       )
                     })}
                 </Row>
@@ -70,7 +70,7 @@ export default function AppreciatorProfile({ userData, setUserData }) {
                   {userData.favourites
                     .map((artId) => {
                       return (
-                        <ArtListDiv id={artId} key={artId} />
+                        <ArtListDiv id={artId} key={artId} crossDisplay={'none'} heartDisplay={true} />
                       )
                     })}
                 </Row>
