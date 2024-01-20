@@ -56,7 +56,8 @@ export default function IndArtPage() {
                 <Row className='indArtSection'>
                     <Col className='indArtImageColumn' sm={6}>
                         <div className="poster-container">
-                            <div className="poster" style={{ backgroundImage: `url(${artImage})` }}><></></div></div>
+                            <div className="poster" style={{ backgroundImage: `url(${artImage})` }}><></></div>
+                        </div>
                     </Col>
                     <Col className='indArtTextColumn'>
                         <Row>

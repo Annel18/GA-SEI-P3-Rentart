@@ -17,6 +17,7 @@ export default function Login(){
     try {
       // Get logged in
       const res = await axios.post('/api/login', parsedData)
+      console.log(res)
       // Save data
       const stagedData = res.data
       setUserData(stagedData)

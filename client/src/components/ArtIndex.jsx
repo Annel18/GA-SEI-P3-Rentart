@@ -284,8 +284,8 @@ export default function ArtIndex() {
                                             || (art.artist.includes(artistChoice) && art.movement.includes(movementChoice) && art.media.includes(mediaChoice))
                                             || (art.artist.includes(artistChoice) && movementChoice === 'Movements' && art.media.includes(mediaChoice))
                                             || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && mediaChoice === 'Media')
-                                            || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && mediaChoice === 'Media')
                                             || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && art.media.includes(mediaChoice)))
+                                            || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && mediaChoice === 'Media')
                                         && pattern.test(art.artName)
                                         && (showFavoritesOnly ? isFavorite : true))
                                 return matchesFilter
@@ -314,7 +314,6 @@ export default function ArtIndex() {
                                         <div className="rails" style={{ height: '300px' }}>
                                             <div className="thumbnail" to={`/art/${indArtId}`}
                                                 style={{ backgroundImage: `url(${artImage})` }}>
-
                                                 <p className='favorite'
                                                     onClick={(e) => {
                                                         e.preventDefault()
