@@ -1,4 +1,5 @@
 # Project 3 - RENT.ART
+![Alt text](./client/src/images/index.png)
 
 ## Description
 This third project was a full-stack group project. We decided to develop a website that would allow customers to rent artwork from the online gallery to their homes. Who wouldn't be thrilled to have the privilege, for a short period, to own a unique masterpiece and to proudly display it in their living room? Have all the time to admire these artworks without having to queue in a museum?
@@ -85,37 +86,37 @@ From day 2, we were ready to start working on the client side and developing the
         - Sliders to change the ranges for the width, height and prices
         - When a customer is logged in, they can add favourites, this brings an extra filter, to only display their favourites on the screen
 
-    ```JavaScript
-    {arts
-        .filter(art => {
-            const minWidth = artWidth[0]
-            const maxWidth = artWidth[1]
-            const minHeight = artHeight[0]
-            const maxHeight = artHeight[1]
-            const pattern = new RegExp(search, 'i')
-            const isUserLoggedIn = userData && userData.token
-            const userFavourites = isUserLoggedIn ? userData.favourites || [] : []
-            const isFavorite = userFavourites.includes(art._id)
-            const matchesFilter =
-                (minWidth < art.width &&
-                    art.width < maxWidth &&
-                    minHeight < art.height &&
-                    art.height < maxHeight &&
-                    ((artistChoice === 'Artists' && movementChoice === 'Movements' && mediaChoice === 'Media')
-                        || (art.artist.includes(artistChoice) && movementChoice === 'Movements' && mediaChoice === 'Media')
-                        || (art.artist.includes(artistChoice) && art.movement.includes(movementChoice) && mediaChoice === 'Media')
-                        || (art.artist.includes(artistChoice) && art.movement.includes(movementChoice) && art.media.includes(mediaChoice))
-                        || (art.artist.includes(artistChoice) && movementChoice === 'Movements' && art.media.includes(mediaChoice))
-                        || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && mediaChoice === 'Media')
-                        || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && mediaChoice === 'Media')
-                        || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && art.media.includes(mediaChoice)))
-                    && pattern.test(art.artName)
-                    && (showFavoritesOnly ? isFavorite : true))
-            return matchesFilter
-        })
-    ```
+            ```JavaScript
+            {arts
+                .filter(art => {
+                    const minWidth = artWidth[0]
+                    const maxWidth = artWidth[1]
+                    const minHeight = artHeight[0]
+                    const maxHeight = artHeight[1]
+                    const pattern = new RegExp(search, 'i')
+                    const isUserLoggedIn = userData && userData.token
+                    const userFavourites = isUserLoggedIn ? userData.favourites || [] : []
+                    const isFavorite = userFavourites.includes(art._id)
+                    const matchesFilter =
+                        (minWidth < art.width &&
+                            art.width < maxWidth &&
+                            minHeight < art.height &&
+                            art.height < maxHeight &&
+                            ((artistChoice === 'Artists' && movementChoice === 'Movements' && mediaChoice === 'Media')
+                                || (art.artist.includes(artistChoice) && movementChoice === 'Movements' && mediaChoice === 'Media')
+                                || (art.artist.includes(artistChoice) && art.movement.includes(movementChoice) && mediaChoice === 'Media')
+                                || (art.artist.includes(artistChoice) && art.movement.includes(movementChoice) && art.media.includes(mediaChoice))
+                                || (art.artist.includes(artistChoice) && movementChoice === 'Movements' && art.media.includes(mediaChoice))
+                                || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && mediaChoice === 'Media')
+                                || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && mediaChoice === 'Media')
+                                || (artistChoice === 'Artists' && art.movement.includes(movementChoice) && art.media.includes(mediaChoice)))
+                            && pattern.test(art.artName)
+                            && (showFavoritesOnly ? isFavorite : true))
+                    return matchesFilter
+                })
+            ```
 
-![indexFilters](./client/src/images/indexFilters.png)
+            ![indexFilters](./client/src/images/indexFilters.png)
 
 - In the meantime, Adam had done the layout and pulled the information needed from the backend to render the page regarding each artwork. 
     - Antonio wrote the logic of the ‘async rentArt’ function in the back-end within the arts.js controller and updated the ‘route.js’ file to assign it as .PUT method to the appropriate path. In summary, this function allows us to ensure that 
@@ -127,58 +128,58 @@ From day 2, we were ready to start working on the client side and developing the
         - Available to rent - “Click to Rent”
         - Rented by the user, allowing the return of the artwork - “Return Art”
 
-    ```JavaScript
-    async function updateUserRented() {
-        console.log('NEW LOG', artId, availableToRent, userData.token)
-        try {
-            const res = await axios.put(`/api/art/rent/${artId}`, { availability: !availableToRent }, {
-                headers: {
-                    Authorization: `Bearer ${userData.token}`,
-                },
-            })
-            setavailableToRent(!availableToRent)
-            setUserData({ ...res.data[1], token: userData.token })
-        } catch (error) {
-            console.error(error)
-        }
-    }
-    ```
+            ```JavaScript
+            async function updateUserRented() {
+                console.log('NEW LOG', artId, availableToRent, userData.token)
+                try {
+                    const res = await axios.put(`/api/art/rent/${artId}`, { availability: !availableToRent }, {
+                        headers: {
+                            Authorization: `Bearer ${userData.token}`,
+                        },
+                    })
+                    setavailableToRent(!availableToRent)
+                    setUserData({ ...res.data[1], token: userData.token })
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+            ```
 
-    ```JavaScript
-    {(isUserLoggedIn) ?
-        availableToRent ? <button
-            className='rent-button'
-            onClick={() => {
-                updateUserRented()
-            }}>
-            Click to Rent
-        </button> :
-            userData.rented.includes(artId) ? (
-                <button
+            ```JavaScript
+            {(isUserLoggedIn) ?
+                availableToRent ? <button
                     className='rent-button'
                     onClick={() => {
                         updateUserRented()
                     }}>
-                    Return Art
-                </button>
-            ) : (<p>Not Available</p>)
-        :
-        (
-            <>
-                <p className="logInMessage">Log in to rent art</p>
-            </>
-        )
-    }
-    ```
+                    Click to Rent
+                </button> :
+                    userData.rented.includes(artId) ? (
+                        <button
+                            className='rent-button'
+                            onClick={() => {
+                                updateUserRented()
+                            }}>
+                            Return Art
+                        </button>
+                    ) : (<p>Not Available</p>)
+                :
+                (
+                    <>
+                        <p className="logInMessage">Log in to rent art</p>
+                    </>
+                )
+            }
+            ```
 
-![artDetailPage](./client/src/images/artDetailPage.png)
+            ![artDetailPage](./client/src/images/artDetailPage.png)
 
 - I created the public profile page, so anyone can have access to information about other users and see what their favourite artwork is, or see their collections if they are artists.
 - I added a modal to the collection page and wrote the JSX to display on the page the artists’ collection in a fluid grid using Bootstrap in the same manner as the index page - Adam wrote the component regarding the form and the functionalities for the artist to upload their artwork in the database
 - I also reworked the style in Sass and updated the layout of the various profiles created by Antonio to keep them consistent and reused the bootstrap fluid containers to lay out the grids for each section (artist’s collection, artworks currently on rent and favourites). Each grid is responsive and the grid size adapts to the screen’s size
 
-![Alt text](./client/src/images/profile_artist.png)
-![Alt text](./client/src/images/index.png)
+    ![Alt text](./client/src/images/profile_artist.png)
+    ![Alt text](./client/src/images/index.png)
 
 ## Challenges
 - Being logged out when refreshing the page, instead of localStorage, we used sessionStorage
