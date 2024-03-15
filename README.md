@@ -5,7 +5,7 @@
 This third project was a full-stack group project. We decided to develop a website that would allow customers to rent artwork from the online gallery to their homes. Who wouldn't be thrilled to have the privilege, for a short period, to own a unique masterpiece and to proudly display it in their living room? Have all the time to admire these artworks without having to queue in a museum?
 
 ## Deployment link
-https://artrent-6d502dba1723.herokuapp.com/
+https://art-rent-3ccae6efd44a.herokuapp.com/
 
 ## Packages to install
 React, React-router-dom, Bootstrap, React Bootstrap, Sass, Node, Axios, MUI, Vite, Bcrypt, Dotenv, Express, JWT (JSON Web Token), Mongoose
